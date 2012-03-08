@@ -1,0 +1,5 @@
+== 0.1.0
+
+* Original version
+* List categories, forums, entries
+* Convert entries from Markdown to HTML push them to Zendesk

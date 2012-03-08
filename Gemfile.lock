@@ -1,0 +1,32 @@
+PATH
+  remote: .
+  specs:
+    zenpush (0.1.0)
+      awesome_print (~> 1.0.0)
+      boson (~> 1.0)
+      httparty (~> 0.8.0)
+      json_pure (~> 1.5.1)
+      redcarpet (~> 2.1.0)
+
+GEM
+  remote: http://rubygems.org/
+  specs:
+    awesome_print (1.0.2)
+    boson (1.1.0)
+    httparty (0.8.1)
+      multi_json
+      multi_xml
+    json_pure (1.5.4)
+      spruz (~> 0.2.8)
+    multi_json (1.1.0)
+    multi_xml (0.4.1)
+    rake (0.9.2.2)
+    redcarpet (2.1.0)
+    spruz (0.2.13)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  rake
+  zenpush!
