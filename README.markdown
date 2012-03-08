@@ -43,7 +43,6 @@ You can find your API token at https://myproduct.zendesk.com/settings/api.
 ### Listing entries in a forum
 
     $ zp entries -f <forum_id>
-    $ zp entries -F <forum_name>
 
 ### Creating/updating an entry
 
