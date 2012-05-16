@@ -21,7 +21,7 @@ Try:
 
 ## Configuration
 
-Create a `zenpush.yml` file in your home directory. Here is an example:
+Create a `.zenpush.yml` file in your home directory. Here is an example:
 
     ---
     uri: https://myproduct.zendesk.com
