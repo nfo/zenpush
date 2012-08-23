@@ -12,7 +12,7 @@ module ZenPush
 
     attr_reader :mode
 
-    def initialize(b = nil, u = nil, p = nil, m = nil)
+    def initialize(b = nil, u = nil, p = nil)
       if b.nil? || u.nil? || p.nil?
         creds = YAML.load_file(File.join(ENV['HOME'], '.zenpush.yml'))
         b ||= creds['uri']
@@ -81,7 +81,6 @@ module ZenPush
       if category
         self.forums.detect {|f| f['name'] == forum_name}
       end
-      self.forums.detect {|f| f['name'] == forum_name}
     end
 
     # Find entry by name, knowing the forum name and category name
