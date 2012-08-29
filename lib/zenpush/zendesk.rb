@@ -78,7 +78,7 @@ module ZenPush
     # Find forum by name, knowing the category name
     def find_forum(category_name, forum_name, options = {})
       category = self.find_category(category_name, options)
-      if category
+      if category || mode == 'starter'
         self.forums.detect {|f| f['name'] == forum_name}
       end
     end
