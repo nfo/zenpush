@@ -10,12 +10,15 @@ module ZenPush
     headers 'Content-Type' => 'application/json'
     # debug_output
 
+    attr_reader :mode
+
     def initialize(b = nil, u = nil, p = nil)
       if b.nil? || u.nil? || p.nil?
         creds = YAML.load_file(File.join(ENV['HOME'], '.zenpush.yml'))
         b ||= creds['uri']
         u ||= creds['user']
         p ||= creds['password']
+        @mode = creds['mode']
       end
 
       self.class.base_uri b + '/api/v1'
@@ -68,13 +71,14 @@ module ZenPush
 
     # Find category by name
     def find_category(category_name, options = {})
+      return nil if mode == 'starter'
       self.categories.detect {|c| c['name'] == category_name}
     end
 
     # Find forum by name, knowing the category name
     def find_forum(category_name, forum_name, options = {})
       category = self.find_category(category_name, options)
-      if category
+      if category || mode == 'starter'
         self.forums.detect {|f| f['name'] == forum_name}
       end
     end

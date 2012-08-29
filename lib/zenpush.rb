@@ -11,7 +11,7 @@ module ZenPush
     @z ||= ZenPush::Zendesk.new
   end
 
-  # 
+  #
   def file_to_category_forum_entry(file)
     absolute_path = File.realpath(file)
     parts = absolute_path.split('/')
