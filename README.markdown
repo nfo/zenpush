@@ -24,11 +24,15 @@ Try:
 Create a `.zenpush.yml` file in your home directory. Here is an example:
 
     ---
-    uri: https://myproduct.zendesk.com
-    user: email@address.com/token
-    password: LoDsQlEtBXSd8clW87DgWi0VNFod3U9xQggzwJEH
+    :uri: https://myproduct.zendesk.com
+    :user: email@address.com/token
+    :password: LoDsQlEtBXSd8clW87DgWi0VNFod3U9xQggzwJEH
 
 You can find your API token at https://myproduct.zendesk.com/settings/api.
+
+Additional configuration (optional):
+
+    :filenames_use_dashes_instead_of_spaces: false 
 
 ## Usage
 
