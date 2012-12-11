@@ -7,19 +7,31 @@ module ZenPush
   class Zendesk
     include HTTParty
 
+    attr_accessor :options
+
     headers 'Content-Type' => 'application/json'
     # debug_output
 
-    def initialize(b = nil, u = nil, p = nil)
-      if b.nil? || u.nil? || p.nil?
-        creds = YAML.load_file(File.join(ENV['HOME'], '.zenpush.yml'))
-        b ||= creds['uri']
-        u ||= creds['user']
-        p ||= creds['password']
-      end
+    def initialize(options = {})
 
-      self.class.base_uri b + '/api/v1'
-      self.class.basic_auth u, p
+      default_options = {
+        :uri => nil,
+        :user => nil,
+        :password => nil,
+        :filenames_use_dashes_instead_of_spaces => false,
+      }
+
+      zenpush_yml = File.join(ENV['HOME'], '.zenpush.yml')
+      zenpush_yml_opts = YAML.load_file(zenpush_yml) if File.readable?(zenpush_yml)
+
+      default_options.merge!(zenpush_yml_opts)
+
+      opts = default_options.merge!(options)
+
+      @options = opts
+
+      self.class.base_uri opts[:uri] + '/api/v1'
+      self.class.basic_auth opts[:user], opts[:password]
     end
 
     def get(uri, options = {})
