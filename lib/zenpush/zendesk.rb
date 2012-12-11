@@ -22,11 +22,14 @@ module ZenPush
       }
 
       zenpush_yml = File.join(ENV['HOME'], '.zenpush.yml')
-      zenpush_yml_opts = YAML.load_file(zenpush_yml) if File.readable?(zenpush_yml)
 
-      default_options.merge!(zenpush_yml_opts)
+      if File.readable?(zenpush_yml)
+        zenpush_yml_opts = YAML.load_file(zenpush_yml)
+        default_options.merge!(zenpush_yml_opts)
+      end
 
       opts = default_options.merge!(options)
+      opts.each_pair { |k,v| raise "#{k} is nil" if v.nil? }
 
       @options = opts
 
