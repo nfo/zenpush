@@ -11,13 +11,20 @@ module ZenPush
     @z ||= ZenPush::Zendesk.new
   end
 
-  # 
   def file_to_category_forum_entry(file)
     absolute_path = File.realpath(file)
+    file_extension = File.extname(file)
+
     parts = absolute_path.split('/')
-    entry_name = File.basename(absolute_path, '.md') # TODO support .markdown and make it case insensitive
+
+    if ZenPush.z.options[:filenames_use_dashes_instead_of_spaces]
+      parts.each { |el| el.gsub!(/-/, ' ') }
+    end
+
+    entry_name = File.basename(parts[-1], file_extension)
     forum_name = parts[-2]
     category_name = parts[-3]
+
     return category_name, forum_name, entry_name
   end
 end
