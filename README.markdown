@@ -74,3 +74,4 @@ The gem will automatically discover the category and forum name of a given entry
 ## Contributors
 
 * @nfo
+* @torandu

@@ -1,3 +1,7 @@
+== 0.1.1
+
+* New option `:filenames_use_dashes_instead_of_spaces` (@torandu)
+
 == 0.1.0
 
 * Original version
