@@ -31,12 +31,13 @@ module ZenPush
 
     desc 'Create or update an entry from the given file'
     option :file, :type => :string
+    option :flavor, :type => :string
     def push(options = {})
       category_name, forum_name, entry_title = ZenPush.file_to_category_forum_entry(options[:file])
 
       entry_body =
         if options[:file].end_with?('.md') || options[:file].end_with?('.markdown')
-          ZenPush::Markdown.to_zendesk_html(options[:file])
+          ZenPush::Markdown.to_zendesk_html(options[:file], options[:flavor])
         else
           File.read(options[:file])
         end
