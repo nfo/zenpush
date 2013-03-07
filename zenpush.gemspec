@@ -17,10 +17,11 @@ Gem::Specification.new do |s|
   s.executables   = `git ls-files -- bin/*`.split("\n").map{ |f| File.basename(f) }
   s.require_paths = ["lib"]
   s.rdoc_options  = ["--charset=UTF-8"]
-  
+
   s.add_dependency "boson", "~> 1.0" # Command line
   s.add_dependency "httparty", "~> 0.8.0" # Zendesk API calls
   s.add_dependency "redcarpet", "~> 2.1.0" # Markdown to HTML
+  s.add_dependency "pygments.rb", "~> 0.4.2" # Code highlighting for Github flavored markdown
   s.add_dependency "awesome_print", "~> 1.0.0" # Colorized output of Zendesk responses
   s.add_dependency "json_pure", "~> 1.5.1" # The C-gem "json" will still be used instead if it's installed
 
