@@ -11,7 +11,7 @@ module ZenPush
     @z ||= ZenPush::Zendesk.new
   end
 
-  def file_to_category_forum_entry(file)
+  def file_to_category_forum_topic(file)
     absolute_path = File.realpath(file)
     file_extension = File.extname(file)
 
@@ -21,10 +21,10 @@ module ZenPush
       parts.each { |el| el.gsub!(/-/, ' ') }
     end
 
-    entry_name = File.basename(parts[-1], file_extension)
+    topic_name = File.basename(parts[-1], file_extension)
     forum_name = parts[-2]
     category_name = parts[-3]
 
-    return category_name, forum_name, entry_name
+    return category_name, forum_name, topic_name
   end
 end
