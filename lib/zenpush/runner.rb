@@ -34,7 +34,12 @@ module ZenPush
     def push(options = {})
       category_name, forum_name, entry_title = ZenPush.file_to_category_forum_entry(options[:file])
 
-      entry_body = ZenPush::Markdown.to_zendesk_html(options[:file])
+      entry_body =
+        if options[:file].end_with?('.md') || options[:file].end_with?('.markdown')
+          ZenPush::Markdown.to_zendesk_html(options[:file])
+        else
+          File.read(options[:file])
+        end
 
       entry = ZenPush.z.find_entry(category_name, forum_name, entry_title)
       if entry

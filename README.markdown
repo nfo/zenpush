@@ -1,6 +1,6 @@
 # ZenPush
 
-This gem allows editing your Zendesk knowledge base in Markdown. It's a command-line tool.
+This gem allows editing your Zendesk knowledge base in Markdown (or HTML). It's a command-line tool.
 
 ## Getting Started
 
@@ -32,7 +32,7 @@ You can find your API token at https://myproduct.zendesk.com/settings/api.
 
 Additional configuration (optional):
 
-    :filenames_use_dashes_instead_of_spaces: false 
+    :filenames_use_dashes_instead_of_spaces: false
 
 ## Usage
 
@@ -58,6 +58,7 @@ Keep an organized folder of your categories, forums, and entries. Let's say I ha
 Creating or updating an entry:
 
     $ zp push -f <path_to_markdown_file>
+    $ zp push -f <path_to_html_file>
 
 Following the previous example, you would type:
 
