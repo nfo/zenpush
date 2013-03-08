@@ -50,7 +50,7 @@ Additional configuration (optional):
 
 ### Creating/updating a topic
 
-Keep an organized folder of your categories, forums, and entries. Let's say I have the category "Documentation", containing a forum "REST API", and the entries "Introduction" and "Authentication"; you'll want to keep this file structure:
+Keep an organized folder of your categories, forums, and topics. Let's say I have the category "Documentation", containing a forum "REST API", and the topics "Introduction" and "Authentication"; you'll want to keep this file structure:
 
     Documentation/REST API/Introduction.md
     Documentation/REST API/Authentication.md
@@ -68,9 +68,19 @@ Following the previous example, you would type:
 
 The gem will automatically discover the category and forum name of a given topic file. It will also convert your Markdown syntax in HTML before sending it to Zendesk.
 
-### Check if an topic exists
+### Check if a topic exists
 
     $ zp exists? -f <path_to_markdown_file>
+
+### Markdown Flavors
+
+ZenPush supports two different flavors of markdown: 'standard' and 'github'. The latter flavor supports Github specific
+syntax such as fenced code blocks and language specific highlighting.
+
+Language highlighting alters the HTML inside code blocks to support styling. You will still need to specify the
+appropriate CSS in your Zendesk account. Highlighting uses Pygments and any of the Pygments styles can be applied.
+
+    $ zp push -f <path_to_markdown_file> -F github
 
 ## Contributors
 
