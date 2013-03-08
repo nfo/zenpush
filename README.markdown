@@ -44,18 +44,18 @@ Additional configuration (optional):
 
     $ zp forums
 
-### Listing entries in a forum
+### Listing topics in a forum
 
-    $ zp entries -f <forum_id>
+    $ zp topics -f <forum_id>
 
-### Creating/updating an entry
+### Creating/updating a topic
 
 Keep an organized folder of your categories, forums, and entries. Let's say I have the category "Documentation", containing a forum "REST API", and the entries "Introduction" and "Authentication"; you'll want to keep this file structure:
 
     Documentation/REST API/Introduction.md
     Documentation/REST API/Authentication.md
 
-Creating or updating an entry:
+Creating or updating a topic:
 
     $ zp push -f <path_to_markdown_file>
     $ zp push -f <path_to_html_file>
@@ -66,9 +66,9 @@ Following the previous example, you would type:
     [~/KB/Documentation]$ zp push -f REST API/Authentication.md
     [~/KB]$ zp push -f REST Documentation/API/Authentication.md
 
-The gem will automatically discover the category and forum name of a given entry file. It will also convert your Markdown syntax in HTML before sending it to Zendesk.
+The gem will automatically discover the category and forum name of a given topic file. It will also convert your Markdown syntax in HTML before sending it to Zendesk.
 
-### Check if an entry exists
+### Check if an topic exists
 
     $ zp exists? -f <path_to_markdown_file>
 
