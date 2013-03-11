@@ -72,6 +72,17 @@ The gem will automatically discover the category and forum name of a given topic
 
     $ zp exists? -f <path_to_markdown_file>
 
+### Images
+
+ZenPush automatically uploads images linked in your markup, provided they can be located on the file system using
+the image path specified.
+
+Image paths are relative to the root of your project. So if you have `![Smiley]('/images/smiley.jpg')`, then ZenPush expects
+your JPEG to be at `<project>/images/smiley.jpg`. If ZenPush cannot locate an image on the file system, you will be warned.
+
+Every time you push a document, images that were previously uploaded are automatically discarded and all images
+are re-uploaded.
+
 ### Markdown Flavors
 
 ZenPush supports two different flavors of markdown: 'standard' and 'github'. The latter flavor supports Github specific

@@ -42,20 +42,7 @@ module ZenPush
           File.read(options[:file])
         end
 
-      topic = ZenPush.z.find_topic(category_name, forum_name, topic_title)
-      if topic
-        # UPDATE THE TOPIC
-        ap ZenPush.z.put_topic(topic['id'], topic_body)
-      else
-        forum = ZenPush.z.find_or_create_forum(category_name, forum_name)
-        if forum
-          # CREATE THE TOPIC
-          ap ZenPush.z.post_topic(forum['id'], topic_title, topic_body)
-        else
-          ap "Could not find a forum named '#{forum_name}' in the category '#{category_name}'"
-          exit(-1)
-        end
-      end
+      ZenPush.z.create_or_update_topic(category_name, forum_name, topic_title, topic_body, options)
     end
   end
 end
