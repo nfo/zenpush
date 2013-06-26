@@ -1,3 +1,7 @@
+## 0.3.1
+
+* Bugfix: Finding a forum by name is scoped to the category. ([alexkwolfe](https://github.com/alexkwolfe))
+
 ## 0.3.0
 
 * [GitHub Flavored Markdown](https://help.github.com/articles/github-flavored-markdown) support, with the `-F github` option. ([alexkwolfe](https://github.com/alexkwolfe))
