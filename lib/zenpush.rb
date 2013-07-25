@@ -21,9 +21,29 @@ module ZenPush
       parts.each { |el| el.gsub!(/-/, ' ') }
     end
 
-    topic_name = File.basename(parts[-1], file_extension)
-    forum_name = parts[-2]
-    category_name = parts[-3]
+    parts.reverse!
+
+    topic_name = File.basename(parts[0], file_extension)
+    parts.shift
+    forum_name = nil
+    category_name = nil
+    if ZenPush.z.options[:ignore_duplicate_names_in_path]
+      category_start=0
+      parts.each_index{ |index|
+        if parts[index]!=topic_name && !forum_name
+          forum_name=parts[index]
+          parts.shift(index)
+        end
+      }
+      parts.each_index{ |index|
+        if parts[index]!=category_name && !category_name
+          category_name=parts[index]
+        end
+      }
+    else
+      forum_name = parts[-2]
+      category_name = parts[-3]
+    end
 
     return category_name, forum_name, topic_name
   end
