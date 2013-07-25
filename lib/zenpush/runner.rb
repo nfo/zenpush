@@ -53,7 +53,7 @@ module ZenPush
           # CREATE THE TOPIC
           ap ZenPush.z.post_topic(forum['id'], topic_title, topic_body)
         else
-          ap "Could not find a forum named '#{forum_name}' in the category '#{category_name}'"
+          ap "Could not find a forum named '#{forum_name}'" +  (ZenPush.z.options[:account_type]=="starter" ? "." : " in the category '#{category_name}'.")
           exit(-1)
         end
       end

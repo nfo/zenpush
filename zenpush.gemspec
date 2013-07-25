@@ -10,7 +10,7 @@ Gem::Specification.new do |s|
   s.email       = ["nicolas.fouche@cleverscale.com"]
   s.homepage    = "https://github.com/cleverscale/zenpush"
   s.summary     = "Push your markdown files to your Zendesk knowledge base"
-  s.description = "Push your markdown files to your Zendesk knowledge base"
+  s.description = "Push your markdown files to your Zendesk knowledge base.  It will handle full and starter accounts."
 
   s.files         = `git ls-files`.split("\n")
   s.test_files    = `git ls-files -- {test,spec,features}/*`.split("\n")
