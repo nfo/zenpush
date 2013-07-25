@@ -42,6 +42,7 @@ module ZenPush
           File.read(options[:file])
         end
 
+      topic_title = topic_title.split.each{|i| i.capitalize!}.join(' ')  
       topic = ZenPush.z.find_topic(category_name, forum_name, topic_title)
       if topic
         # UPDATE THE TOPIC

@@ -19,6 +19,7 @@ module ZenPush
         :user => nil,
         :password => nil,
         :filenames_use_dashes_instead_of_spaces => false,
+        :account_type => "full"
       }
 
       zenpush_yml = File.join(ENV['HOME'], '.zenpush.yml')
@@ -100,17 +101,25 @@ module ZenPush
 
     # Find forum by name, knowing the category name
     def find_forum(category_name, forum_name, options = {})
-      category = self.find_category(category_name, options)
-      if category
-        self.forums.detect {|f| f['category_id'] == category['id'] && f['name'] == forum_name }
+      if @options[:account_type]=="starter"
+        self.forums.detect {|f| f['name'].casecmp(forum_name)==0 }
+      else 
+        category = self.find_category(category_name, options)
+        if category
+          self.forums.detect {|f| f['category_id'] == category['id'] && f['name'].casecmp(forum_name)==0 }
+        end
       end
     end
 
     # Given a category name, find a forum by name. Create the category and forum either doesn't exist.
     def find_or_create_forum(category_name, forum_name, options={ })
-      category = self.find_or_create_category(category_name, options)
-      if category
-        self.forums.detect { |f| f['category_id'] == category['id'] && f['name'] == forum_name } || post_forum(category['id'], forum_name)
+      if @options[:account_type]=="starter"
+          self.forums.detect { |f| f['name'].casecmp(forum_name)==0 } || post_forum(nil, forum_name)
+      else
+        category = self.find_or_create_category(category_name, options)
+        if category
+          self.forums.detect { |f| f['category_id'] == category['id'] && f['name'].casecmp(forum_name)==0 } || post_forum(category['id'], forum_name)
+        end
       end
     end
 
