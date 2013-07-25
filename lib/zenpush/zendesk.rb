@@ -19,6 +19,7 @@ module ZenPush
         :user => nil,
         :password => nil,
         :filenames_use_dashes_instead_of_spaces => false,
+        :ignore_duplicate_names_in_path => false,
         :account_type => "full"
       }
 
