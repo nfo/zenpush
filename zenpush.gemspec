@@ -10,7 +10,7 @@ Gem::Specification.new do |s|
   s.email       = ["nicolas.fouche@cleverscale.com"]
   s.homepage    = "https://github.com/cleverscale/zenpush"
   s.summary     = "Push your markdown files to your Zendesk knowledge base"
-  s.description = "Push your markdown files to your Zendesk knowledge base"
+  s.description = "Push your markdown files to your Zendesk knowledge base.  It will handle full and starter accounts."
 
   s.files         = `git ls-files`.split("\n")
   s.test_files    = `git ls-files -- {test,spec,features}/*`.split("\n")
@@ -24,6 +24,7 @@ Gem::Specification.new do |s|
   s.add_dependency "pygments.rb", "~> 0.4.2" # Code highlighting for Github flavored markdown
   s.add_dependency "awesome_print", "~> 1.0.0" # Colorized output of Zendesk responses
   s.add_dependency "json_pure", "~> 1.5.1" # The C-gem "json" will still be used instead if it's installed
+  s.add_dependency "curb", "~> 0.8.4" #Needed to make quick post with binary data, easy to convert zendesk examples with this.
 
   s.add_development_dependency "rake"
 end

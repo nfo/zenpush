@@ -2,6 +2,7 @@
 require 'json'
 require 'yaml'
 require 'httparty'
+require 'curb'
 
 module ZenPush
   class Zendesk
@@ -19,6 +20,8 @@ module ZenPush
         :user => nil,
         :password => nil,
         :filenames_use_dashes_instead_of_spaces => false,
+        :ignore_duplicate_names_in_path => false,
+        :account_type => "full"
       }
 
       zenpush_yml = File.join(ENV['HOME'], '.zenpush.yml')
@@ -100,17 +103,25 @@ module ZenPush
 
     # Find forum by name, knowing the category name
     def find_forum(category_name, forum_name, options = {})
-      category = self.find_category(category_name, options)
-      if category
-        self.forums.detect {|f| f['category_id'] == category['id'] && f['name'] == forum_name }
+      if @options[:account_type]=="starter"
+        self.forums.detect {|f| f['name'].casecmp(forum_name)==0 }
+      else 
+        category = self.find_category(category_name, options)
+        if category
+          self.forums.detect {|f| f['category_id'] == category['id'] && f['name'].casecmp(forum_name)==0 }
+        end
       end
     end
 
     # Given a category name, find a forum by name. Create the category and forum either doesn't exist.
     def find_or_create_forum(category_name, forum_name, options={ })
-      category = self.find_or_create_category(category_name, options)
-      if category
-        self.forums.detect { |f| f['category_id'] == category['id'] && f['name'] == forum_name } || post_forum(category['id'], forum_name)
+      if @options[:account_type]=="starter"
+          self.forums.detect { |f| f['name'].casecmp(forum_name)==0 } || post_forum(nil, forum_name)
+      else
+        category = self.find_or_create_category(category_name, options)
+        if category
+          self.forums.detect { |f| f['category_id'] == category['id'] && f['name'].casecmp(forum_name)==0 } || post_forum(category['id'], forum_name)
+        end
       end
     end
 
@@ -163,7 +174,32 @@ module ZenPush
                  :body => { :topic => { :body => body } }.to_json
                )
       )['topic']
+    end# Update a topic in the given forum id
+    
+    def put_topic_tokens(id, tokens, options = { })
+      self.put("/topics/#{id}.json",
+               options.merge(
+                 :body => { :topic => { :uploads => tokens } }.to_json
+               )
+      )['topic']
     end
 
+    def delete_attachment(id, options = {})
+      self.delete("/attachments/#{id}.json", options)
+    end
+
+
+     # Create a topic in the given forum id
+    def post_upload(title, file, options = { })
+      puts "file: "+file
+      curl = Curl::Easy.new(self.options[:uri]+"/uploads.json?filename="+File.basename(File.realpath(file)))
+      curl.headers["Content-Type"] = "application/binary"
+      curl.username = self.options[:user]
+      curl.password = self.options[:password]
+      data = File.read(File.realpath(file))
+      curl.post_body=data
+      curl.http_post
+      JSON.parse(curl.body_str)["token"]
+    end
   end
 end

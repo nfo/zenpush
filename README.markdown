@@ -32,7 +32,9 @@ You can find your API token at https://myproduct.zendesk.com/settings/api.
 
 Additional configuration (optional):
 
-    :filenames_use_dashes_instead_of_spaces: false
+    :filenames_use_dashes_instead_of_spaces: true/false
+    :ignore_duplicate_names_in_path: true/false
+    :account_type: full/starter
 
 ## Usage
 
@@ -49,6 +51,8 @@ Additional configuration (optional):
     $ zp topics -f <forum_id>
 
 ### Creating/updating a topic
+
+#### Simple Structure
 
 Keep an organized folder of your categories, forums, and topics. Let's say I have the category "Documentation", containing a forum "REST API", and the topics "Introduction" and "Authentication"; you'll want to keep this file structure:
 
@@ -67,6 +71,32 @@ Following the previous example, you would type:
     [~/KB]$ zp push -f REST Documentation/API/Authentication.md
 
 The gem will automatically discover the category and forum name of a given topic file. It will also convert your Markdown syntax in HTML before sending it to Zendesk.
+
+#### Nested Folder Structure
+
+Some times it is nessesary to have a duplicated folder structure if you use certain tools. If the `ignore_duplicate_names_in_path` boolean is set to true, any duplicated folder structure will be ignored. For example:
+
+    Documentation/REST API/Introduction/Introduction.md
+
+Would resolve to a category of "Documentation", a forum of "REST API" and a topic of "Introduction".  Without this boolean you would get a category of "REST API" and a forum of "Introduction".
+
+#### With Attachments Structure
+
+zp can automatically include attachments to your topic if the folder structure is correct.  With the following folder sturcture:
+
+```
+> root
+  > Documentation
+    > REST-API
+      > Introduction
+        > attachments
+            - attachment.jpg
+        - Introduction.md
+```
+
+You would get a new "Documentation/REST API/Introduction" topic with an "attachment.jpg" attachment.
+
+Note: The upload removes and replaces any file that is named that same on that topic with the one in the attachments folder.
 
 ### Check if a topic exists
 
@@ -87,3 +117,4 @@ appropriate CSS in your Zendesk account. Highlighting uses Pygments and any of t
 * [nfo](https://github.com/nfo)
 * [torandu](https://github.com/torandu)
 * [alexkwolfe](https://github.com/alexkwolfe)
+* [tgsoverly](https//github.com/tgsoverly)
