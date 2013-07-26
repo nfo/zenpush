@@ -2,6 +2,7 @@
 require 'json'
 require 'yaml'
 require 'httparty'
+require 'curb'
 
 module ZenPush
   class Zendesk
@@ -173,7 +174,32 @@ module ZenPush
                  :body => { :topic => { :body => body } }.to_json
                )
       )['topic']
+    end# Update a topic in the given forum id
+    
+    def put_topic_tokens(id, tokens, options = { })
+      self.put("/topics/#{id}.json",
+               options.merge(
+                 :body => { :topic => { :uploads => tokens } }.to_json
+               )
+      )['topic']
     end
 
+    def delete_attachment(id, options = {})
+      self.delete("/attachments/#{id}.json", options)
+    end
+
+
+     # Create a topic in the given forum id
+    def post_upload(title, file, options = { })
+      puts "file: "+file
+      curl = Curl::Easy.new(self.options[:uri]+"/uploads.json?filename="+File.basename(File.realpath(file)))
+      curl.headers["Content-Type"] = "application/binary"
+      curl.username = self.options[:user]
+      curl.password = self.options[:password]
+      data = File.read(File.realpath(file))
+      curl.post_body=data
+      curl.http_post
+      JSON.parse(curl.body_str)["token"]
+    end
   end
 end

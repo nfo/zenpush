@@ -12,6 +12,10 @@ module ZenPush
   end
 
   def file_to_category_forum_topic(file)
+    forum_name = nil
+    category_name = nil
+    attachments_folder = nil
+
     absolute_path = File.realpath(file)
     file_extension = File.extname(file)
 
@@ -24,9 +28,13 @@ module ZenPush
     parts.reverse!
 
     topic_name = File.basename(parts[0], file_extension)
+
+    # Remove topic name from list of files
     parts.shift
-    forum_name = nil
-    category_name = nil
+
+    # set attachment folder if present
+    if File.exists?(File.dirname(file)+"/attachments") then attachments_folder = File.dirname(file)+"/attachments" end
+
     if ZenPush.z.options[:ignore_duplicate_names_in_path]
       category_start=0
       parts.each_index{ |index|
@@ -36,15 +44,17 @@ module ZenPush
         end
       }
       parts.each_index{ |index|
-        if parts[index]!=category_name && !category_name
+        if parts[index]!=forum_name && !category_name
           category_name=parts[index]
         end
       }
     else
-      forum_name = parts[-2]
-      category_name = parts[-3]
+      forum_name = parts[0]
+      category_name = parts[1]
     end
-
-    return category_name, forum_name, topic_name
+    if ZenPush.z.options[:account_type]=="starter"
+      category_name=nil
+    end
+    return category_name, forum_name, topic_name, attachments_folder
   end
 end

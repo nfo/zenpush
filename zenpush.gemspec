@@ -24,6 +24,7 @@ Gem::Specification.new do |s|
   s.add_dependency "pygments.rb", "~> 0.4.2" # Code highlighting for Github flavored markdown
   s.add_dependency "awesome_print", "~> 1.0.0" # Colorized output of Zendesk responses
   s.add_dependency "json_pure", "~> 1.5.1" # The C-gem "json" will still be used instead if it's installed
+  s.add_dependency "curb", "~> 0.8.4" #Needed to make quick post with binary data, easy to convert zendesk examples with this.
 
   s.add_development_dependency "rake"
 end
